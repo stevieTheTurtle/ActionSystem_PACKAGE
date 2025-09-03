@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "displayName": "Action System",
   "description": "A simple tool to implement humanoid NPC interactions with 3D objects and navigate the 3D environment.",
-  "unity": "6000.2"
+  "unity": "6000.2",
+  "dependencies": {
+    "com.unity.animation.rigging": "1.3.0"
+  }
 }
