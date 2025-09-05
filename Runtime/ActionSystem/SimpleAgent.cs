@@ -6,35 +6,47 @@ public class SimpleAgent : Agent
 {
     [SerializeField] private bool enableDebugLogging;
     
-    public void Touch(Interactable target, EffectorType effectorType)
+    public AgentAction Touch(Interactable target, EffectorType effectorType)
     {
         if (enableDebugLogging)
             Debug.Log($"Adding TouchAction with {target.Desc}");
 
-        this.EnqueueAction(new TouchAction(this, effectorType, target));
+        AgentAction action = new TouchAction(this, effectorType, target);
+        this.EnqueueAction(action);
+
+        return action;
     }
     
-    public void Pick(Pickable target, EffectorType effectorType)
+    public AgentAction Pick(Pickable target, EffectorType effectorType)
     {
         if (enableDebugLogging)
             Debug.Log($"Adding PickAction with {target.Desc}");
-        
-        this.EnqueueAction(new PickAction(this, effectorType, target));
+
+        AgentAction action = new PickAction(this, effectorType, target);
+        this.EnqueueAction(action);
+
+        return action;
     }
     
-    public void Drop(Pickable pickableObj, Transform dropTransform, EffectorType effectorType)
+    public AgentAction Drop(Pickable pickableObj, Transform dropTransform, EffectorType effectorType)
     {
         if (enableDebugLogging)
             Debug.Log($"Adding DropAction with {pickableObj.Desc}");
-        
-        this.EnqueueAction(new DropAction(this, pickableObj, dropTransform, effectorType));
+
+        AgentAction action = new DropAction(this, pickableObj, dropTransform, effectorType);
+        this.EnqueueAction(action);
+
+        return action;
     }
     
-    public void Walk(Transform destination)
+    public AgentAction Walk(Transform destination)
     {
         if (enableDebugLogging)
             Debug.Log($"Adding WalkAction to {destination}");
-            
-        this.EnqueueAction(new WalkAction(this, destination));
+
+        AgentAction action = new WalkAction(this, destination);
+        this.EnqueueAction(action);
+
+        return action;
     }
 }
