@@ -49,5 +49,10 @@ namespace AgentActionSystem
         {
             state = newState;
         }
+
+        public ActionState GetState()
+        {
+            return state;
+        }
     }
 }
