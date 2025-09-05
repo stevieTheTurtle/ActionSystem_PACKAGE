@@ -24,15 +24,26 @@ public class TouchAction : AgentAction
     
     internal override void Setup()
     {
-        if(!target.CanInteract)
-            Debug.LogWarning("Not interactable at the moment");
-        if(interactionSystem.GetEffector(effectorType).IsInteracting())
-            Debug.LogWarning("Effector is already interacting with something");
+        if (!target.CanInteract)
+        {
+            SetLog("Not interactable at the moment");
+            SetState(ActionState.Failed);
+            return;
+        }
+
+        if (interactionSystem.GetEffector(effectorType).IsInteracting())
+        {
+            SetLog("Effector is already interacting with something");
+            SetState(ActionState.Failed);
+            return;
+        }
+
+        SetState(ActionState.Updating);
     }
 
     internal override void OnStart()
     {
-        Debug.Log("Touch started");
+        //Debug.Log("Touch started");
         
         if (target != null && target.CanInteract)
         {
@@ -51,7 +62,7 @@ public class TouchAction : AgentAction
 
     internal override void OnComplete()
     {
-        Debug.Log("Touch completed");
+        //Debug.Log("Touch completed");
     }
 
     private void OnInteractionStarted(Interaction interaction)

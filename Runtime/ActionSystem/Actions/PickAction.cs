@@ -24,15 +24,26 @@ public class PickAction : AgentAction
     
     internal override void Setup()
     {
-        if(!target.CanInteract)
-            Debug.LogWarning("Not pickable at the moment");
-        if(interactionSystem.GetEffector(effectorType).IsInteracting())
-            Debug.LogWarning("Effector is already interacting with something");
+        if (!target.CanInteract)
+        {
+            SetLog("Not pickable at the moment");
+            SetState(ActionState.Failed);
+            return;
+        }
+
+        if (interactionSystem.GetEffector(effectorType).IsInteracting())
+        {
+            SetLog("Effector is already interacting with something");
+            SetState(ActionState.Failed);
+            return;
+        }
+        
+        SetState(ActionState.Updating);
     }
 
     internal override void OnStart()
     {
-        Debug.Log("Pick started");
+        //Debug.Log("Pick started");
         
         if (!target.IsBeingCarried)
         {
@@ -44,7 +55,7 @@ public class PickAction : AgentAction
         }
         else
         {
-            Debug.LogWarning($"{target} is already being carried");
+            SetLog($"{target} is already being carried");
             SetState(ActionState.Failed);
         }
     }
@@ -56,7 +67,7 @@ public class PickAction : AgentAction
 
     internal override void OnComplete()
     {
-        Debug.Log("Pick completed");
+        //Debug.Log("Pick completed");
     }
 
     private void OnInteractionStarted(Interaction interaction)

@@ -29,20 +29,24 @@ public class DropAction : AgentAction
     {
         if (!pickableObj.IsBeingCarried)
         {
-            Debug.LogWarning("Pickable object is not being carried right now");
+            SetLog("Pickable object is not being carried right now");
             SetState(ActionState.Failed);
+            return;
         }
 
         if (interactionSystem.GetEffector(effectorType).IsInteracting())
         {
-            Debug.LogWarning("Effector is already interacting with something");
+            SetLog("Effector is already interacting with something");
             SetState(ActionState.Failed);
+            return;
         }
+        
+        SetState(ActionState.Updating);
     }
 
     internal override void OnStart()
     {
-        Debug.Log("Pick started");
+        //Debug.Log("Pick started");
 
         Interaction interaction = interactionSystem.StartReachInteraction(dropTransform, effectorType);
         
@@ -59,7 +63,7 @@ public class DropAction : AgentAction
 
     internal override void OnComplete()
     {
-        Debug.Log("Drop completed");
+        //Debug.Log("Drop completed");
     }
 
     private void OnInteractionStarted(Interaction interaction)

@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using MxM;
 using UnityEngine;
 using UnityEngine.AI;
@@ -43,7 +44,25 @@ public class LocomotionSystem : MonoBehaviour
 
     public bool CanReach(Vector3 position)
     {
-        return true;
+        NavMeshHit navHit;
+        NavMeshPath navPath = new NavMeshPath();
+        
+        bool isOnNavMesh = NavMesh.SamplePosition(position, out navHit, 0.1f, NavMesh.AllAreas); //TODO: Distanza di check arbitraria!!!
+        bool hasReachablePath =
+            NavMesh.CalculatePath(navAgent.transform.position, position, NavMesh.AllAreas, navPath);
+
+        return (isOnNavMesh && hasReachablePath);
+    }
+
+    public bool CanReachNearPoint(Vector3 position, float maxDistance, out Vector3 reachPos)
+    {
+        NavMeshHit navHit;
+        NavMeshPath navPath = new NavMeshPath();
+        
+        NavMesh.SamplePosition(position, out navHit, maxDistance, NavMesh.AllAreas);
+        reachPos = navHit.position;
+
+        return CanReach(navHit.position);
     }
 
     private void LateUpdate()

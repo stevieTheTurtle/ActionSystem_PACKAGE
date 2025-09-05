@@ -66,11 +66,9 @@ namespace AgentActionSystem
             {
                 case ActionState.Idle:
                     currentAction.Setup();
-                    if (currentAction.State != ActionState.Failed)
+                    if (currentAction.State == ActionState.Updating)
                     {
                         currentAction.OnStart();
-                        currentAction.SetState(ActionState.Updating);
-                        break;
                     }
                     break;
                 case ActionState.Updating:

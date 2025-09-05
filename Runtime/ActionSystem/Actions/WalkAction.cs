@@ -23,8 +23,21 @@ public class WalkAction : AgentAction
     {
         if (!locomotionSystem.CanReach(destination.position))
         {
-            Debug.LogWarning("Destination unreachable");
-            SetState(ActionState.Failed);
+            Vector3 reachPosition;
+            if (locomotionSystem.CanReachNearPoint(destination.position, 5f, out reachPosition)) //TODO: Distanza di check arbitraria!!!
+            {
+                SetState(ActionState.Stopped); //TODO: al momento la considero Stopped e non Failed!!!
+                SetLog($"Destination unreachable but {reachPosition} is the nearest reachablePosition");
+            }
+            else
+            {
+                SetState(ActionState.Failed);
+                SetLog($"Destination totally unreachable");
+            }
+        }
+        else
+        {
+            SetState(ActionState.Updating);
         }
     }
 

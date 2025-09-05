@@ -180,6 +180,14 @@ public class AgentDebuggerWindow : EditorWindow
             ActionState state = (ActionState)stateField.GetValue(action);
             EditorGUILayout.LabelField("State", state.ToString());
         }
+        
+        // Use reflection to get the log of the action
+        FieldInfo logField = typeof(AgentAction).GetField("LOG", BindingFlags.NonPublic | BindingFlags.Instance);
+        if (logField != null)
+        {
+            string log = (string)logField.GetValue(action);
+            EditorGUILayout.TextField("Log", log);
+        }
 
         // Get all fields of the action's specific type to display its parameters
         FieldInfo[] fields = action.GetType().GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);

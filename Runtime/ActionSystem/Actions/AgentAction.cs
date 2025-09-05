@@ -20,7 +20,7 @@ namespace AgentActionSystem
     public abstract class AgentAction
     {
         [SerializeField] private ActionState state = ActionState.Idle;
-        internal ActionState State => state;
+        [SerializeField] private string LOG = "None";
 
         public Action<Interaction> OnActionStarted;
         public Action<Interaction> OnActionReached;
@@ -45,14 +45,10 @@ namespace AgentActionSystem
             //Debug.LogError("TO IMPLEMENT");
         }
 
-        internal void SetState(ActionState newState)
-        {
-            state = newState;
-        }
+        internal void SetState(ActionState newState) => state = newState;
+        public ActionState State => state;
 
-        public ActionState GetState()
-        {
-            return state;
-        }
+        internal void SetLog(string log) => LOG = log;
+        public string Log => LOG;
     }
 }
