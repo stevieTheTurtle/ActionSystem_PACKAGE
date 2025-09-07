@@ -73,6 +73,6 @@ public class MoveAction : AgentAction
 
     private Vector3 GetGlobalPosition()
     {
-        return origin.position + origin.TransformPoint(movement);
+        return origin.position + origin.TransformVector(movement);
     }
 }
