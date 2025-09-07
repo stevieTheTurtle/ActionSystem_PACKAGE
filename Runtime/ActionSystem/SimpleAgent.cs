@@ -49,4 +49,15 @@ public class SimpleAgent : Agent
 
         return action;
     }
+    
+    public AgentAction Move(Transform cameraPov, Vector3 movement)
+    {
+        if (enableDebugLogging)
+            Debug.Log($"Adding WalkForAction to move of {movement}");
+
+        AgentAction action = new MoveAction(this, cameraPov, movement);
+        this.EnqueueAction(action);
+
+        return action;
+    }
 }
