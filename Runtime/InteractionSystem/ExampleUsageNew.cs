@@ -17,6 +17,7 @@ namespace HumanoidInteraction
         [SerializeField] private Interactable interactableObj;
         [SerializeField] private Pickable pickableObj;
         [SerializeField] private Transform dropTransform;
+        [SerializeField] private Vector3 movementVector;
         
         [Header("Debug")]
         [SerializeField] private bool enableDebugLogging = true;
@@ -101,7 +102,7 @@ namespace HumanoidInteraction
                 destinationGO = new GameObject("WalkAction_Destination");
             
             //agent.Walk(destinationGO.transform);
-            agent.Move(agent.transform, new Vector3(1f, 0.01f, 1f));
+            agent.Move(agent.transform, movementVector);
         }
 
         public void StopCurrentAction()

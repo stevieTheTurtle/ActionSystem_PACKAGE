@@ -79,7 +79,7 @@ public class LocomotionSystem : MonoBehaviour
         if (!navAgent.pathPending)
         {
             // Check if the agent has a complete path.
-            if (navAgent.pathStatus == NavMeshPathStatus.PathComplete)
+            //if (navAgent.pathStatus == NavMeshPathStatus.PathComplete) //To complete action if moving in the same place has the navagent already is!!!
             {
                 // Check if the agent is close enough to the destination.
                 if (navAgent.remainingDistance <= navAgent.stoppingDistance)

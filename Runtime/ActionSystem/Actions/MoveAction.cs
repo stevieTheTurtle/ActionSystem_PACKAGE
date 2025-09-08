@@ -27,6 +27,8 @@ public class MoveAction : AgentAction
 
     internal override void Setup()
     {
+        //if(IsPointNear(destination.position, locomotionSystem.transform.position, ))
+        
         if (!locomotionSystem.CanReach(destination.position))
         {
             Vector3 reachPosition;
@@ -75,4 +77,12 @@ public class MoveAction : AgentAction
     {
         return origin.position + origin.TransformVector(movement);
     }
+
+    // private bool IsPointNear(Vector3 point, Vector3 target, float distance)
+    // {
+    //     if((target-point).magnitude <= distance)
+    //         return true;
+    //     else
+    //         return false;
+    // }
 }
