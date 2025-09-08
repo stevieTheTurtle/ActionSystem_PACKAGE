@@ -1,5 +1,6 @@
 using System;
 using AgentActionSystem;
+using MxM;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -10,6 +11,8 @@ public class MoveAction : AgentAction
     [SerializeField] private Transform origin;
     [SerializeField] private Vector3 movement;
     [SerializeField] private LocomotionSystem locomotionSystem;
+    
+    [SerializeField] private Vector3 reachableDestination;
 
     public MoveAction(Agent agent, Transform origin, Vector3 movement)
     {
@@ -34,8 +37,9 @@ public class MoveAction : AgentAction
             Vector3 reachPosition;
             if (locomotionSystem.CanReachNearPoint(destination.position, 5f, out reachPosition)) //TODO: Distanza di check arbitraria!!!
             {
+                reachableDestination = origin.InverseTransformPoint(reachPosition);
                 SetState(ActionState.Stopped); //TODO: al momento la considero Stopped e non Failed!!!
-                SetLog($"Destination unreachable but {origin.InverseTransformPoint(reachPosition)} is the nearest reachablePosition");
+                SetLog($"Destination unreachable but {reachableDestination} is the nearest reachablePosition");
             }
             else
             {
