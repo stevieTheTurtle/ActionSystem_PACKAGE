@@ -13,6 +13,7 @@ public class MoveAction : AgentAction
     [SerializeField] private LocomotionSystem locomotionSystem;
     
     [SerializeField] private Vector3 reachableDestination;
+    public Vector3 ReachableDestination => reachableDestination;
 
     public MoveAction(Agent agent, Transform origin, Vector3 movement)
     {
