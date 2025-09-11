@@ -25,8 +25,14 @@ namespace HumanoidInteraction
         public Transform TargetTransform => targetTransform;
         private Transform restTransform;
         public Transform RestTransform => restTransform;
+        private Transform attachTransform;
+        public Transform AttachTransform => attachTransform;
+        
+        // To store the position in which the interaction has been stopped
+        public Vector3 stoppedPosition = Vector3.zero; 
         
         public Interaction currentInteraction;
+        
         public InteractionState CurrentState
         {
             get
@@ -37,9 +43,6 @@ namespace HumanoidInteraction
                     return InteractionState.Idle;
             }
         }
-
-        private Transform attachTransform;
-        public Transform AttachTransform => attachTransform;
         
         public InteractionEffector(EffectorType type, Transform targetTransform, Transform restTransform, Transform attachTransform)
         {

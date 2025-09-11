@@ -76,9 +76,9 @@ namespace HumanoidInteraction
             pickInteraction.OnInteractionHolded += interaction =>
             {
                 InteractionEffector effector = GetEffector(effectorType);
-                (target).transform.SetParent(effector.AttachTransform);
-                (target).transform.localPosition = Vector3.zero;
-                (target).transform.localRotation = Quaternion.identity;
+                target.transform.SetParent(effector.AttachTransform);
+                target.transform.localPosition = Vector3.zero;
+                target.transform.localRotation = Quaternion.identity;
                 
                 this.SetCarriedObj(target,effectorType);
                 
@@ -161,6 +161,8 @@ namespace HumanoidInteraction
 
             if (interaction.currentState != InteractionState.Idle)
             {
+                GetEffector(interaction.effectorType).stoppedPosition =
+                    riggingController.GetEffectorTip(interaction.effectorType).position;
                 StartCoroutine(ReturnPhase(interaction));
                 interaction.currentState = InteractionState.Idle;
                 interaction.currentCoroutine = null;

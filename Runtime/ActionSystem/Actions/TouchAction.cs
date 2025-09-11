@@ -13,6 +13,8 @@ public class TouchAction : AgentAction
     [SerializeField] private InteractionSystem interactionSystem;
 
     [SerializeField] private Interaction interaction;
+    
+    [SerializeField] private Vector3 stoppedPosition = Vector3.zero;
 
     public TouchAction(Agent agent, EffectorType effectorType, Interactable target)
     {
@@ -65,6 +67,7 @@ public class TouchAction : AgentAction
         //EffectorRig is totally blended in, so i can check if the effector is actually able to reach the target
         if (interactionSystem.IsConstraintTipAwayFromTarget(effectorType))
         {
+            stoppedPosition = interactionSystem.GetEffector(interaction.effectorType).stoppedPosition;
             interactionSystem.StopInteraction(interaction);
             SetState(ActionState.Failed);
         }

@@ -14,6 +14,8 @@ public class PickAction : AgentAction
 
     [SerializeField] private Interaction interaction;
     
+    [SerializeField] private Vector3 stoppedPosition = Vector3.zero;
+    
     public PickAction(Agent agent, EffectorType effectorType, Pickable pickableObj)
     {
         Assert.IsNotNull(agent.InteractionSystem);
@@ -70,6 +72,7 @@ public class PickAction : AgentAction
         //EffectorRig is totally blended in, so i can check if the effector is actually able to reach the target
         if (interactionSystem.IsConstraintTipAwayFromTarget(effectorType))
         {
+            stoppedPosition = interactionSystem.GetEffector(interaction.effectorType).stoppedPosition;
             interactionSystem.StopInteraction(interaction);
             SetState(ActionState.Failed);
         }

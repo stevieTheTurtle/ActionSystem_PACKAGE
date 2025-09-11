@@ -271,5 +271,13 @@ namespace HumanoidInteraction
             bool isAway = (chainTip - chaintarget).magnitude > 0.1f;
             return isAway;
         }
+        
+        /// <summary>
+        /// Get the reference of the ConstraintTip of the effector
+        /// </summary>
+        public Transform GetEffectorTip(EffectorType type)
+        {
+            return GetRig(type).GetComponentInChildren<TwoBoneIKConstraint>().data.tip;
+        }
     }
 } 
