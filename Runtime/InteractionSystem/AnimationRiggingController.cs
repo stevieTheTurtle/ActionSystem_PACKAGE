@@ -224,6 +224,14 @@ namespace HumanoidInteraction
         }
 
         /// <summary>
+        /// Get rig from EffectorType
+        /// </summary>
+        public Rig GetRig(EffectorType type)
+        {
+            return rigMap[GetEffector(type)];
+        }
+        
+        /// <summary>
         /// Check if an effector is currently being controlled by IK
         /// </summary>
         public bool IsEffectorActive(EffectorType type)
@@ -234,6 +242,34 @@ namespace HumanoidInteraction
                 return rigMap[effector].weight > 0.1f;
             }
             return false;
+        }
+        
+        /// <summary>
+        /// Check if an effector is currently being controlled by IK with weight that tends to 1f
+        /// </summary>
+        public bool IsEffectorTotallyActive(EffectorType type)
+        {
+            InteractionEffector effector = GetEffector(type);
+            if (effector != null)
+            {
+                return rigMap[effector].weight > 0.9f;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Check if the actual effector ConstraintTip is too far away from the target
+        /// </summary>
+        public bool IsConstraintTipAwayFromTarget(EffectorType type)
+        {
+            InteractionEffector effector = GetEffector(type);
+            TwoBoneIKConstraint constraint = rigMap[effector].GetComponentInChildren<TwoBoneIKConstraint>();
+            
+            Vector3 chainTip = constraint.data.tip.position;
+            Vector3 chaintarget = constraint.data.target.position;
+            
+            bool isAway = (chainTip - chaintarget).magnitude > 0.1f;
+            return isAway;
         }
     }
 } 

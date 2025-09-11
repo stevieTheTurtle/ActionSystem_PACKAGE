@@ -286,5 +286,21 @@ namespace HumanoidInteraction
         {
             SetCarriedObj(null,effectorType);
         }
+        
+        /// <summary>
+        /// Check if an effector has its rig actually active or not
+        /// </summary>
+        public bool IsEffectorTotallyActive(EffectorType type)
+        {
+            return riggingController.IsEffectorTotallyActive(type);
+        }
+        
+        /// <summary>
+        /// Check if an effector has its ConstraintTip too far away from its target 
+        /// </summary>
+        public bool IsConstraintTipAwayFromTarget(EffectorType type)
+        {
+            return riggingController.IsConstraintTipAwayFromTarget(type);
+        }
     }
 } 

@@ -8,23 +8,25 @@ using UnityEngine.Assertions;
 public class PickAction : AgentAction
 {
     [SerializeField] private EffectorType effectorType;
-    [SerializeField] private Pickable target;
+    [SerializeField] private Pickable pickableObj;
 
     [SerializeField] private InteractionSystem interactionSystem;
 
-    public PickAction(Agent agent, EffectorType effectorType, Pickable target)
+    [SerializeField] private Interaction interaction;
+    
+    public PickAction(Agent agent, EffectorType effectorType, Pickable pickableObj)
     {
         Assert.IsNotNull(agent.InteractionSystem);
-        Assert.IsNotNull(target);
+        Assert.IsNotNull(pickableObj);
         
         this.interactionSystem = agent.InteractionSystem;
         this.effectorType = effectorType;
-        this.target = target;
+        this.pickableObj = pickableObj;
     }
     
     internal override void Setup()
     {
-        if (!target.CanInteract)
+        if (!pickableObj.CanInteract)
         {
             SetLog("Not pickable at the moment");
             SetState(ActionState.Failed);
@@ -45,9 +47,9 @@ public class PickAction : AgentAction
     {
         //Debug.Log("Pick started");
         
-        if (!target.IsBeingCarried)
+        if (!pickableObj.IsBeingCarried)
         {
-            Interaction interaction = interactionSystem.StartPickInteraction(target, effectorType);
+            interaction = interactionSystem.StartPickInteraction(pickableObj, effectorType);
             
             interaction.OnInteractionStarted += OnInteractionStarted;
             interaction.OnInteractionCompleted += OnInteractionCompleted;
@@ -55,14 +57,22 @@ public class PickAction : AgentAction
         }
         else
         {
-            SetLog($"{target} is already being carried");
+            SetLog($"{pickableObj} is already being carried");
             SetState(ActionState.Failed);
         }
     }
 
     internal override void OnUpdate()
     {
-        //Debug.Log("Touch updating");
+        if(! interactionSystem.IsEffectorTotallyActive(effectorType))
+            return;
+        
+        //EffectorRig is totally blended in, so i can check if the effector is actually able to reach the target
+        if (interactionSystem.IsConstraintTipAwayFromTarget(effectorType))
+        {
+            interactionSystem.StopInteraction(interaction);
+            SetState(ActionState.Failed);
+        }
     }
 
     internal override void OnComplete()

@@ -7,11 +7,13 @@ using UnityEngine.Assertions;
 [Serializable]
 public class DropAction : AgentAction
 {
+    [SerializeField] private EffectorType effectorType;
     [SerializeField] private Pickable pickableObj;
     [SerializeField] private Transform dropTransform;
-    [SerializeField] private EffectorType effectorType;
 
     [SerializeField] private InteractionSystem interactionSystem;
+
+    [SerializeField] private Interaction interaction;
 
     public DropAction(Agent agent, Pickable pickableObj, Transform dropTransform, EffectorType effectorType)
     {
@@ -48,7 +50,7 @@ public class DropAction : AgentAction
     {
         //Debug.Log("Pick started");
 
-        Interaction interaction = interactionSystem.StartReachInteraction(dropTransform, effectorType);
+        interaction = interactionSystem.StartReachInteraction(dropTransform, effectorType);
         
         interaction.OnInteractionStarted += OnInteractionStarted;
         interaction.OnInteractionHolded += OnInteractionHolded;
@@ -58,7 +60,15 @@ public class DropAction : AgentAction
 
     internal override void OnUpdate()
     {
-        //Debug.Log("Touch updating");
+        if(! interactionSystem.IsEffectorTotallyActive(effectorType))
+            return;
+        
+        //EffectorRig is totally blended in, so i can check if the effector is actually able to reach the target
+        if (interactionSystem.IsConstraintTipAwayFromTarget(effectorType))
+        {
+            interactionSystem.StopInteraction(interaction);
+            SetState(ActionState.Failed);
+        }
     }
 
     internal override void OnComplete()

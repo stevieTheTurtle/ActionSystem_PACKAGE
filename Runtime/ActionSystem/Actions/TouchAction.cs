@@ -12,6 +12,8 @@ public class TouchAction : AgentAction
 
     [SerializeField] private InteractionSystem interactionSystem;
 
+    [SerializeField] private Interaction interaction;
+
     public TouchAction(Agent agent, EffectorType effectorType, Interactable target)
     {
         this.interactionSystem = agent.InteractionSystem;
@@ -47,7 +49,7 @@ public class TouchAction : AgentAction
         
         if (target != null && target.CanInteract)
         {
-            Interaction interaction = interactionSystem.StartSimpleTouchInteraction(target, effectorType);
+            interaction = interactionSystem.StartSimpleTouchInteraction(target, effectorType);
             
             interaction.OnInteractionStarted += OnInteractionStarted;
             interaction.OnInteractionCompleted += OnInteractionCompleted;
@@ -57,7 +59,15 @@ public class TouchAction : AgentAction
 
     internal override void OnUpdate()
     {
-        //Debug.Log("Touch updating");
+        if(! interactionSystem.IsEffectorTotallyActive(effectorType))
+            return;
+        
+        //EffectorRig is totally blended in, so i can check if the effector is actually able to reach the target
+        if (interactionSystem.IsConstraintTipAwayFromTarget(effectorType))
+        {
+            interactionSystem.StopInteraction(interaction);
+            SetState(ActionState.Failed);
+        }
     }
 
     internal override void OnComplete()

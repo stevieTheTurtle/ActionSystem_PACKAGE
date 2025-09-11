@@ -1398,6 +1398,7 @@ MonoBehaviour:
   interactableObj: {fileID: 1064716036}
   pickableObj: {fileID: 2099129657}
   dropTransform: {fileID: 1534567760}
+  movementVector: {x: 0, y: 0, z: 0}
   enableDebugLogging: 1
 --- !u!114 &425865516
 MonoBehaviour:
@@ -5903,6 +5904,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1769375868}
   - component: {fileID: 1769375869}
+  - component: {fileID: 1769375870}
   m_Layer: 0
   m_Name: IK Constraint
   m_TagString: Untagged
@@ -5947,6 +5949,29 @@ MonoBehaviour:
     m_TargetPositionWeight: 1
     m_TargetRotationWeight: 1
     m_HintWeight: 1
+    m_MaintainTargetPositionOffset: 0
+    m_MaintainTargetRotationOffset: 0
+--- !u!114 &1769375870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1769375867}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 796b75e345bd64d47a31edd757bd2670, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Animation.Rigging::UnityEngine.Animations.Rigging.ChainIKConstraint
+  m_Weight: 1
+  m_Data:
+    m_Root: {fileID: 1556463183}
+    m_Tip: {fileID: 422907317}
+    m_Target: {fileID: 101436889}
+    m_ChainRotationWeight: 1
+    m_TipRotationWeight: 1
+    m_MaxIterations: 15
+    m_Tolerance: 0.0001
     m_MaintainTargetPositionOffset: 0
     m_MaintainTargetRotationOffset: 0
 --- !u!1 &1776406624
