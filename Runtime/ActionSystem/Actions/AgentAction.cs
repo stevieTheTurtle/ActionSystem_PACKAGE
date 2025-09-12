@@ -1,10 +1,9 @@
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 using HumanoidInteraction;
 
-namespace AgentActionSystem
+namespace ActionSystem
 {
     [Serializable]
     public enum ActionState

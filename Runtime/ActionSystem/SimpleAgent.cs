@@ -1,74 +1,76 @@
-using AgentActionSystem;
 using HumanoidInteraction;
 using UnityEngine;
 
-public class SimpleAgent : Agent
+namespace ActionSystem
 {
-    [SerializeField] private bool enableDebugLogging;
-    
-    public AgentAction Touch(Interactable target, EffectorType effectorType)
+    public class SimpleAgent : Agent
     {
-        if (enableDebugLogging)
-            Debug.Log($"Adding TouchAction with {target.Desc}");
+        [SerializeField] private bool enableDebugLogging;
 
-        AgentAction action = new TouchAction(this, effectorType, target);
-        this.EnqueueAction(action);
+        public AgentAction Touch(Interactable target, EffectorType effectorType)
+        {
+            if (enableDebugLogging)
+                Debug.Log($"Adding TouchAction with {target.Desc}");
 
-        return action;
-    }
-    
-    public AgentAction Pick(Pickable target, EffectorType effectorType)
-    {
-        if (enableDebugLogging)
-            Debug.Log($"Adding PickAction with {target.Desc}");
+            AgentAction action = new TouchAction(this, effectorType, target);
+            this.EnqueueAction(action);
 
-        AgentAction action = new PickAction(this, effectorType, target);
-        this.EnqueueAction(action);
+            return action;
+        }
 
-        return action;
-    }
-    
-    public AgentAction Drop(Pickable pickableObj, Transform dropTransform, EffectorType effectorType)
-    {
-        if (enableDebugLogging)
-            Debug.Log($"Adding DropAction with {pickableObj.Desc}");
+        public AgentAction Pick(Pickable target, EffectorType effectorType)
+        {
+            if (enableDebugLogging)
+                Debug.Log($"Adding PickAction with {target.Desc}");
 
-        AgentAction action = new DropAction(this, pickableObj, dropTransform, effectorType);
-        this.EnqueueAction(action);
+            AgentAction action = new PickAction(this, effectorType, target);
+            this.EnqueueAction(action);
 
-        return action;
-    }
-    
-    public AgentAction Walk(Transform destination)
-    {
-        if (enableDebugLogging)
-            Debug.Log($"Adding WalkAction to {destination}");
+            return action;
+        }
 
-        AgentAction action = new WalkAction(this, destination);
-        this.EnqueueAction(action);
+        public AgentAction Drop(Pickable pickableObj, Transform dropTransform, EffectorType effectorType)
+        {
+            if (enableDebugLogging)
+                Debug.Log($"Adding DropAction with {pickableObj.Desc}");
 
-        return action;
-    }
-    
-    public AgentAction Move(Transform cameraPov, Vector3 movement)
-    {
-        if (enableDebugLogging)
-            Debug.Log($"Adding MoveAction to move of {movement}");
+            AgentAction action = new DropAction(this, pickableObj, dropTransform, effectorType);
+            this.EnqueueAction(action);
 
-        AgentAction action = new MoveAction(this, cameraPov, movement);
-        this.EnqueueAction(action);
+            return action;
+        }
 
-        return action;
-    }
-    
-    public AgentAction MoveAndTurn(Transform cameraPov, Vector3 movement, Vector3 turnToPoint)
-    {
-        if (enableDebugLogging)
-            Debug.Log($"Adding MoveAndTurnAction to move of {movement}");
+        public AgentAction Walk(Transform destination)
+        {
+            if (enableDebugLogging)
+                Debug.Log($"Adding WalkAction to {destination}");
 
-        AgentAction action = new MoveAndTurnAction(this, cameraPov, movement, turnToPoint);
-        this.EnqueueAction(action);
+            AgentAction action = new WalkAction(this, destination);
+            this.EnqueueAction(action);
 
-        return action;
+            return action;
+        }
+
+        public AgentAction Move(Transform cameraPov, Vector3 movement)
+        {
+            if (enableDebugLogging)
+                Debug.Log($"Adding MoveAction to move of {movement}");
+
+            AgentAction action = new MoveAction(this, cameraPov, movement);
+            this.EnqueueAction(action);
+
+            return action;
+        }
+
+        public AgentAction MoveAndTurn(Transform cameraPov, Vector3 movement, Vector3 turnToPoint)
+        {
+            if (enableDebugLogging)
+                Debug.Log($"Adding MoveAndTurnAction to move of {movement}");
+
+            AgentAction action = new MoveAndTurnAction(this, cameraPov, movement, turnToPoint);
+            this.EnqueueAction(action);
+
+            return action;
+        }
     }
 }

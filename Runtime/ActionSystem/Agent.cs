@@ -1,9 +1,8 @@
-using System;
 using System.Collections.Generic;
 using HumanoidInteraction;
 using UnityEngine;
 
-namespace AgentActionSystem
+namespace ActionSystem
 {
     [RequireComponent(typeof(InteractionSystem))]
     public class Agent : MonoBehaviour

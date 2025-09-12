@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-using AgentActionSystem;
+using ActionSystem;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace HumanoidInteraction
 {
