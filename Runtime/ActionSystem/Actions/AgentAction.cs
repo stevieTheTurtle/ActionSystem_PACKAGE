@@ -28,26 +28,26 @@ namespace ActionSystem
         public Action<Interaction> OnActionStopped;
         public Action<Interaction> OnActionFailed;
         
-        internal abstract void Setup();
+        protected internal abstract void Setup();
         
-        internal abstract void OnStart();
-        internal abstract void OnUpdate();
-        internal abstract void OnComplete();
+        protected internal abstract void OnStart();
+        protected internal abstract void OnUpdate();
+        protected internal abstract void OnComplete();
 
-        internal  void OnStop()
+        protected internal  void OnStop()
         {
             //Debug.LogError("TO IMPLEMENT");
         }
 
-        internal void OnFail()
+        protected internal void OnFail()
         {
             //Debug.LogError("TO IMPLEMENT");
         }
 
-        internal void SetState(ActionState newState) => state = newState;
+        protected internal void SetState(ActionState newState) => state = newState;
         public ActionState State => state;
 
-        internal void SetLog(string log) => LOG = log;
+        protected internal void SetLog(string log) => LOG = log;
         public string Log => LOG;
     }
 }

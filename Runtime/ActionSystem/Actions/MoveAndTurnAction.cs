@@ -29,7 +29,7 @@ namespace ActionSystem
             destination.LookAt(turnToPoint, agent.transform.up);
         }
 
-        internal override void Setup()
+        protected internal override void Setup()
         {
             //if(IsPointNear(destination.position, locomotionSystem.transform.position, ))
 
@@ -55,7 +55,7 @@ namespace ActionSystem
             }
         }
 
-        internal override void OnStart()
+        protected internal override void OnStart()
         {
             Debug.Log("Move started");
 
@@ -63,12 +63,12 @@ namespace ActionSystem
             locomotionSystem.OnDestinationArrival += OnDestinationArrival;
         }
 
-        internal override void OnUpdate()
+        protected internal override void OnUpdate()
         {
             //throw new NotImplementedException();
         }
 
-        internal override void OnComplete()
+        protected internal override void OnComplete()
         {
             Debug.Log("Move completed");
         }

@@ -19,7 +19,7 @@ namespace ActionSystem
             this.locomotionSystem = agent.LocomotionSystem;
         }
 
-        internal override void Setup()
+        protected internal override void Setup()
         {
             if (!locomotionSystem.CanReach(destination.position))
             {
@@ -42,7 +42,7 @@ namespace ActionSystem
             }
         }
 
-        internal override void OnStart()
+        protected internal override void OnStart()
         {
             Debug.Log("Walk started");
 
@@ -50,12 +50,12 @@ namespace ActionSystem
             locomotionSystem.OnDestinationArrival += OnDestinationArrival;
         }
 
-        internal override void OnUpdate()
+        protected internal override void OnUpdate()
         {
             //throw new NotImplementedException();
         }
 
-        internal override void OnComplete()
+        protected internal override void OnComplete()
         {
             Debug.Log("Walk completed");
         }

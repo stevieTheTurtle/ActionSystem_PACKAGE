@@ -30,7 +30,7 @@ namespace ActionSystem
             this.effectorType = effectorType;
         }
 
-        internal override void Setup()
+        protected internal override void Setup()
         {
             if (!pickableObj.IsBeingCarried)
             {
@@ -49,7 +49,7 @@ namespace ActionSystem
             SetState(ActionState.Updating);
         }
 
-        internal override void OnStart()
+        protected internal override void OnStart()
         {
             //Debug.Log("Pick started");
 
@@ -61,7 +61,7 @@ namespace ActionSystem
             interaction.OnInteractionFailed += OnInteractionFailed;
         }
 
-        internal override void OnUpdate()
+        protected internal override void OnUpdate()
         {
             if (!interactionSystem.IsEffectorTotallyActive(effectorType))
                 return;
@@ -75,7 +75,7 @@ namespace ActionSystem
             }
         }
 
-        internal override void OnComplete()
+        protected internal override void OnComplete()
         {
             //Debug.Log("Drop completed");
         }

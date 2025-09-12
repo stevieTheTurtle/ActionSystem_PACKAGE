@@ -27,7 +27,7 @@ namespace ActionSystem
             Assert.IsNotNull(target);
         }
 
-        internal override void Setup()
+        protected internal override void Setup()
         {
             if (!target.CanInteract)
             {
@@ -46,7 +46,7 @@ namespace ActionSystem
             SetState(ActionState.Updating);
         }
 
-        internal override void OnStart()
+        protected internal override void OnStart()
         {
             //Debug.Log("Touch started");
 
@@ -60,7 +60,7 @@ namespace ActionSystem
             }
         }
 
-        internal override void OnUpdate()
+        protected internal override void OnUpdate()
         {
             if (!interactionSystem.IsEffectorTotallyActive(effectorType))
                 return;
@@ -74,7 +74,7 @@ namespace ActionSystem
             }
         }
 
-        internal override void OnComplete()
+        protected internal override void OnComplete()
         {
             //Debug.Log("Touch completed");
         }
