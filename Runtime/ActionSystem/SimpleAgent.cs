@@ -5,7 +5,7 @@ namespace ActionSystem
 {
     public class SimpleAgent : Agent
     {
-        [SerializeField] private bool enableDebugLogging;
+        [SerializeField] protected bool enableDebugLogging;
 
         public AgentAction Touch(Interactable target, EffectorType effectorType)
         {
