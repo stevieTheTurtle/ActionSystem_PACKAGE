@@ -12,7 +12,8 @@ namespace HumanoidInteraction
         RightHand,
         LeftHand,
         RightFoot,
-        LeftFoot
+        LeftFoot,
+        HeadLook
     }
 
     [Serializable]

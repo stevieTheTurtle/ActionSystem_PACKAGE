@@ -120,6 +120,23 @@ namespace HumanoidInteraction
         }
         
         /// <summary>
+        /// SIMPLE FUNCTION: start looking at the target
+        /// </summary>
+        /// <param name="target">The target to look</param>
+        public void StartLook(Transform target)
+        {
+            StartCoroutine(riggingController.LookAtTarget(target, 1f));
+        }
+        
+        /// <summary>
+        /// SIMPLE FUNCTION: stop looking at the target
+        /// </summary>
+        public void StopLook()
+        {
+            StartCoroutine(riggingController.ReturnGazeToRest(1f));
+        }
+        
+        /// <summary>
         /// Command an NPC to interact with an object using custom settings
         /// </summary>
         /// <param name="interaction">The interaction with all settings</param>
@@ -293,6 +310,14 @@ namespace HumanoidInteraction
         /// Check if an effector has its rig actually active or not
         /// </summary>
         public bool IsEffectorTotallyActive(EffectorType type)
+        {
+            return riggingController.IsEffectorTotallyActive(type);
+        }
+        
+        /// <summary>
+        /// Check if an effector has its rig actually active or not
+        /// </summary>
+        public bool IsEffectorTotallyInactive(EffectorType type)
         {
             return riggingController.IsEffectorTotallyActive(type);
         }

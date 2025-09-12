@@ -53,6 +53,7 @@ namespace HumanoidInteraction
         private InteractionEffector leftHandEffector;
         private InteractionEffector rightFootEffector;
         private InteractionEffector leftFootEffector;
+        private InteractionEffector lookEffector;
         
         private Dictionary<InteractionEffector, Rig> rigMap;
 
@@ -75,13 +76,16 @@ namespace HumanoidInteraction
             leftHandEffector = new InteractionEffector(EffectorType.LeftHand, leftHandTarget, leftHandRest, leftHandAttach);
             rightFootEffector = new InteractionEffector(EffectorType.RightFoot, rightFootTarget, rightFootRest, null);
             leftFootEffector = new InteractionEffector(EffectorType.LeftFoot, leftFootTarget, leftFootRest, null);
+            
+            lookEffector = new InteractionEffector(EffectorType.HeadLook, lookAtTarget, lookAtRest, null);
 
             rigMap = new Dictionary<InteractionEffector, Rig>
             {
                 { rightHandEffector, rightArmRig },
                 { leftHandEffector, leftArmRig },
                 { rightFootEffector, rightLegRig },
-                { leftFootEffector, leftLegRig }
+                { leftFootEffector, leftLegRig },
+                { lookEffector, headRig }
             };
         }
 
@@ -218,6 +222,8 @@ namespace HumanoidInteraction
                     return rightFootEffector;
                 case EffectorType.LeftFoot:
                     return leftFootEffector;
+                case EffectorType.HeadLook:
+                    return lookEffector;
                 default:
                     return null;
             }
@@ -253,6 +259,19 @@ namespace HumanoidInteraction
             if (effector != null)
             {
                 return rigMap[effector].weight > 0.9f;
+            }
+            return false;
+        }
+        
+        /// <summary>
+        /// Check if an effector is currently being controlled by IK with weight that tends to 0f
+        /// </summary>
+        public bool IsEffectorTotallyInactive(EffectorType type)
+        {
+            InteractionEffector effector = GetEffector(type);
+            if (effector != null)
+            {
+                return rigMap[effector].weight < 0.01f;
             }
             return false;
         }

@@ -1,5 +1,6 @@
 using ActionSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace HumanoidInteraction
 {
@@ -19,6 +20,11 @@ namespace HumanoidInteraction
         [Header("Test Movement")]
         [SerializeField] private Vector3 movementVector;
         [SerializeField] private Vector3 turnToPoint;
+        
+        [FormerlySerializedAs("lookingTarget")]
+        [Header("Test Looking")]
+        [SerializeField] private Transform lookTarget;
+        [SerializeField] private bool isLooking;
         
         [Header("Debug")]
         [SerializeField] private bool enableDebugLogging = true;
@@ -66,6 +72,12 @@ namespace HumanoidInteraction
             if (Input.GetKeyDown(KeyCode.C))
             {
                 TestCompositeAction();
+            }
+            
+            // Look
+            if (Input.GetKeyDown(KeyCode.L))
+            {
+                TestToggleLook();
             }
 
             // Stop current action
@@ -121,6 +133,20 @@ namespace HumanoidInteraction
 
             agent.MoveTurnAndTouch(agent.transform, movementVector, turnToPoint, interactableObj,
                 EffectorType.RightHand);
+        }
+
+        public void TestToggleLook()
+        {
+            isLooking = !isLooking;
+
+            if (isLooking)
+            {
+                agent.ToggleLook(lookTarget);
+            }
+            else
+            {
+                agent.ToggleLook(null);
+            }
         }
 
 

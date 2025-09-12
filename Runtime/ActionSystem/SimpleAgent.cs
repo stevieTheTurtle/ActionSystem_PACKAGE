@@ -89,5 +89,16 @@ namespace ActionSystem
 
             return compositeAction;
         }
+        
+        public AgentAction ToggleLook(Transform lookTarget)
+        {
+            if (enableDebugLogging)
+                Debug.Log($"Adding LookAction to look at {lookTarget}");
+
+            AgentAction action = new LookAction(this, lookTarget);
+            this.EnqueueAction(action);
+
+            return action;
+        }
     }
 }
