@@ -34,7 +34,7 @@ namespace ActionSystem
         protected internal abstract void OnUpdate();
         protected internal abstract void OnComplete();
 
-        protected internal  void OnStop()
+        protected internal void OnStop()
         {
             //Debug.LogError("TO IMPLEMENT");
         }

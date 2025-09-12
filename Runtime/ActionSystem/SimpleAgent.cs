@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using HumanoidInteraction;
 using UnityEngine;
 
@@ -62,15 +63,31 @@ namespace ActionSystem
             return action;
         }
 
-        public AgentAction MoveAndTurn(Transform cameraPov, Vector3 movement, Vector3 turnToPoint)
+        public AgentAction MoveTurn(Transform cameraPov, Vector3 movement, Vector3 turnToPoint)
         {
             if (enableDebugLogging)
-                Debug.Log($"Adding MoveAndTurnAction to move of {movement}");
+                Debug.Log($"Adding MoveTurn-Action to move of {movement} look at {turnToPoint}");
 
-            AgentAction action = new MoveAndTurnAction(this, cameraPov, movement, turnToPoint);
+            AgentAction action = new MoveTurnAction(this, cameraPov, movement, turnToPoint);
             this.EnqueueAction(action);
 
             return action;
+        }
+
+        public AgentCompositeAction MoveTurnAndTouch(Transform cameraPov, Vector3 movement, Vector3 turnToPoint,
+            Interactable target, EffectorType effectorType)
+        {
+            if (enableDebugLogging)
+                Debug.Log($"Adding MoveTurnAndTouch-CompositeAction to move of {movement} look at {turnToPoint} and touch {target}");
+
+            List<AgentAction> subActions = new List<AgentAction>();
+            subActions.Add(new MoveTurnAction(this, cameraPov, movement, turnToPoint));
+            subActions.Add(new TouchAction(this, effectorType, target));
+            AgentCompositeAction compositeAction = new AgentCompositeAction(subActions);
+            
+            this.EnqueueAction(compositeAction);
+
+            return compositeAction;
         }
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine.Assertions;
 namespace ActionSystem
 {
     [Serializable]
-    public class MoveAndTurnAction : AgentAction
+    public class MoveTurnAction : AgentAction
     {
         [SerializeField] private Transform destination;
         [SerializeField] private Transform origin;
@@ -15,7 +15,7 @@ namespace ActionSystem
         [SerializeField] private Vector3 reachableDestination;
         public Vector3 ReachableDestination => reachableDestination;
 
-        public MoveAndTurnAction(Agent agent, Transform origin, Vector3 movement, Vector3 turnToPoint)
+        public MoveTurnAction(Agent agent, Transform origin, Vector3 movement, Vector3 turnToPoint)
         {
             Assert.IsNotNull(origin);
             Assert.IsNotNull(agent.LocomotionSystem);

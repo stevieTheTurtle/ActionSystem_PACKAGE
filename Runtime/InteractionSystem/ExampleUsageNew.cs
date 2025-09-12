@@ -61,6 +61,12 @@ namespace HumanoidInteraction
             {
                 TestWalkAction();
             }
+            
+            // Walk action
+            if (Input.GetKeyDown(KeyCode.C))
+            {
+                TestCompositeAction();
+            }
 
             // Stop current action
             if (Input.GetKeyDown(KeyCode.Backspace))
@@ -104,8 +110,19 @@ namespace HumanoidInteraction
             
             //agent.Walk(destinationGO.transform);
             //agent.Move(agent.transform, movementVector);
-            agent.MoveAndTurn(agent.transform, movementVector, turnToPoint);
+            agent.MoveTurn(agent.transform, movementVector, turnToPoint);
         }
+        
+        public void TestCompositeAction()
+        {
+            GameObject destinationGO = GameObject.Find("WalkAction_Destination");
+            if (destinationGO == null)
+                destinationGO = new GameObject("WalkAction_Destination");
+
+            agent.MoveTurnAndTouch(agent.transform, movementVector, turnToPoint, interactableObj,
+                EffectorType.RightHand);
+        }
+
 
         public void StopCurrentAction()
         {
