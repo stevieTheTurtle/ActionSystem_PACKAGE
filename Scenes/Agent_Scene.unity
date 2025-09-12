@@ -1398,7 +1398,8 @@ MonoBehaviour:
   interactableObj: {fileID: 1064716036}
   pickableObj: {fileID: 2099129657}
   dropTransform: {fileID: 1534567760}
-  movementVector: {x: 0, y: 0, z: 0}
+  movementVector: {x: 0, y: 0, z: 1}
+  turnToPoint: {x: 2, y: 0, z: 2}
   enableDebugLogging: 1
 --- !u!114 &425865516
 MonoBehaviour:

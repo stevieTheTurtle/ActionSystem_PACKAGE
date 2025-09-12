@@ -181,7 +181,7 @@ namespace HumanoidInteraction
         {
             interaction.OnInteractionStarted?.Invoke(interaction);
 
-            bool interactionSucceeded = true;
+            //bool interactionSucceeded = true;
             
             // Phase 1: REACH - Move effector to target
             interaction.currentState = InteractionState.Reaching;

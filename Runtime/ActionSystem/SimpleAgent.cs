@@ -53,9 +53,20 @@ public class SimpleAgent : Agent
     public AgentAction Move(Transform cameraPov, Vector3 movement)
     {
         if (enableDebugLogging)
-            Debug.Log($"Adding WalkForAction to move of {movement}");
+            Debug.Log($"Adding MoveAction to move of {movement}");
 
         AgentAction action = new MoveAction(this, cameraPov, movement);
+        this.EnqueueAction(action);
+
+        return action;
+    }
+    
+    public AgentAction MoveAndTurn(Transform cameraPov, Vector3 movement, Vector3 turnToPoint)
+    {
+        if (enableDebugLogging)
+            Debug.Log($"Adding MoveAndTurnAction to move of {movement}");
+
+        AgentAction action = new MoveAndTurnAction(this, cameraPov, movement, turnToPoint);
         this.EnqueueAction(action);
 
         return action;
