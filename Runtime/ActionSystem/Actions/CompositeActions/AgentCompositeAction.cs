@@ -14,7 +14,7 @@ namespace ActionSystem
         private float waitTime;
         private float elapsedTime;
         
-        protected internal AgentCompositeAction(List<AgentAction> subActions, float waitTimeBetweenActions = 0.5f)
+        public AgentCompositeAction(List<AgentAction> subActions, float waitTimeBetweenActions = 0.5f)
         {
             subActionsQueue = subActions;
             this.waitTime = waitTimeBetweenActions;

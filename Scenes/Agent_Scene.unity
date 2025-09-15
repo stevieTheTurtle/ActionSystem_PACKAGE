@@ -1400,6 +1400,8 @@ MonoBehaviour:
   dropTransform: {fileID: 1534567760}
   movementVector: {x: 0, y: 0, z: 1}
   turnToPoint: {x: 2, y: 0, z: 0}
+  lookTarget: {fileID: 1064716034}
+  isLooking: 0
   enableDebugLogging: 1
 --- !u!114 &425865516
 MonoBehaviour:
