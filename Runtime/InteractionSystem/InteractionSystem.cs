@@ -319,7 +319,7 @@ namespace HumanoidInteraction
         /// </summary>
         public bool IsEffectorTotallyInactive(EffectorType type)
         {
-            return riggingController.IsEffectorTotallyActive(type);
+            return riggingController.IsEffectorTotallyInactive(type);
         }
         
         /// <summary>
