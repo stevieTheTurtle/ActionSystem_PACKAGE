@@ -8,8 +8,10 @@ namespace ActionSystem
     public class MoveTurnAction : AgentAction
     {
         [SerializeField] private Transform destination;
+        [SerializeField] private Transform reqDestination;
+        [SerializeField] private Transform suggestedDestination;
+        [SerializeField] private Vector3 turnToPointGlobal;
         [SerializeField] private Transform origin;
-        [SerializeField] private Vector3 movement;
         [SerializeField] private LocomotionSystem locomotionSystem;
 
         [SerializeField] private Vector3 reachableDestination;
@@ -22,23 +24,26 @@ namespace ActionSystem
 
             this.locomotionSystem = agent.LocomotionSystem;
             this.origin = origin;
-            this.movement = movement;
+            this.turnToPointGlobal = origin.TransformPoint(turnToPoint);
 
-            this.destination = GameObject.Find("WalkAction_Destination").transform;
-            destination.position = GetGlobalPosition();
-            destination.LookAt(turnToPoint, agent.transform.up);
+            this.reqDestination = GameObject.Find("WalkAction_ReqDestination").transform;
+            reqDestination.position = origin.TransformPoint(movement);
+            
+            //reqDestination.transform.up = Vector3.up;
         }
 
         protected internal override void Setup()
         {
+            suggestedDestination = GameObject.Find("WalkAction_SuggestedDestination").transform;
             //if(IsPointNear(destination.position, locomotionSystem.transform.position, ))
 
-            if (!locomotionSystem.CanReach(destination.position))
+            if (!locomotionSystem.CanReach(reqDestination.position))
             {
                 Vector3 reachPosition;
-                if (locomotionSystem.CanReachNearPoint(destination.position, 5f,
+                if (locomotionSystem.CanReachNearPoint(reqDestination.position, 5f,
                         out reachPosition)) //TODO: Distanza di check arbitraria!!!
                 {
+                    suggestedDestination.position = reachPosition;
                     reachableDestination = origin.InverseTransformPoint(reachPosition);
                     SetState(ActionState.Stopped); //TODO: al momento la considero Stopped e non Failed!!!
                     SetLog($"Destination unreachable but {reachableDestination} is the nearest reachablePosition");
@@ -51,6 +56,16 @@ namespace ActionSystem
             }
             else
             {
+                Vector3 turnToPointProjectedOnXZ = new Vector3(
+                    turnToPointGlobal.x, 
+                    locomotionSystem.transform.transform.position.y, 
+                    turnToPointGlobal.z);
+                reqDestination.LookAt(turnToPointProjectedOnXZ, Vector3.up);
+
+                float dotProduct = Vector3.Dot(reqDestination.transform.up, Vector3.up);
+                if (dotProduct < 0.99f)
+                    Debug.LogError($"This should not happen : reqDestination.transform.up is not up!\nDotProduct={dotProduct}");
+                
                 SetState(ActionState.Updating);
             }
         }
@@ -59,6 +74,10 @@ namespace ActionSystem
         {
             Debug.Log("Move started");
 
+            this.destination = GameObject.Find("WalkAction_Destination").transform;
+            destination.position = reqDestination.position;
+            destination.rotation = reqDestination.rotation;
+            
             locomotionSystem.SetDestination(destination);
             locomotionSystem.OnDestinationArrival += OnDestinationArrival;
         }
@@ -77,11 +96,6 @@ namespace ActionSystem
         {
             locomotionSystem.OnDestinationArrival -= OnDestinationArrival;
             SetState(ActionState.Completed);
-        }
-
-        private Vector3 GetGlobalPosition()
-        {
-            return origin.position + origin.TransformVector(movement);
         }
 
         // private bool IsPointNear(Vector3 point, Vector3 target, float distance)
